@@ -3,7 +3,7 @@
 // initialize the page with initial id data
 
 // from activity 2.04
-function buildPlots() {
+function init() {
 
   d3.json("../../data/samples.json").then((data)=> {
     console.log(data)
@@ -22,79 +22,87 @@ function buildPlots() {
     var sample_values = data.samples.sample_values;
     var otu_labels = data.samples.otu_labels;
     
-    // create multiple traces
-    // activity 1.07 & 1.08
+    // ***** Bar Chart *****
+    // Use sample_values as the values for the bar chart.
+    // Use otu_ids as the labels for the bar chart.
+    // Use otu_labels as the hovertext for the chart.
 
-    // trace1 for pulldown menu names
+    // create variables required for bar chart
+    var top10SampleValues = sample_values.descending.slice(0, 10).reverse();
+    console.log(top10SampleValues);
+    
+    var top10OtuIDs = 
+
+    console.log(top10OtuIDs);
+
+    var top10OtuLabels =
+
+    console.log(top10OtuLabels);
+
+    // create a trace for bar chart
+    // from activity 1.02
+
     var trace1 = {
-      type: "scatter",
-      mode: "lines",
-      name: name,
-      x: dates,
-      y: closingPrices,
-      line: {
-        color: "#17BECF"
-      };
-
-      // trace2 for "metadata" data
-      var trace2 = {
-      type: "scatter",
-      mode: "lines",
-      name: name,
-      x: dates,
-      y: closingPrices,
-      line: {
-        color: "#17BECF"
-      };
-
-      // trace3 for "samples" data
-      var trace3 = {
-      type: "scatter",
-      mode: "lines",
-      name: name,
-      x: dates,
-      y: closingPrices,
-      line: {
-          color: "#17BECF"
-      };
-
-      // Combining both traces
-      var data = [trace1, trace2];
-
-
-
-
-    };
-
-
-
-
-
-
-
-
-
-
-    var data = [trace1];
-
-    var layout = {
-      title: `${stock} closing prices`,
-      xaxis: {
-        range: [startDate, endDate],
-        type: "date"
-      },
-      yaxis: {
-        autorange: true,
-        type: "linear"
+      type:"bar",
+      orientation: "h",
+      x: top10SampleValues,
+      y: top10OtuID,
+      text: top10OtuLabels,
+      marker: {
+        color: "blue"
+        width: 0.5
       }
     };
 
-    Plotly.newPlot("plot", data, layout);
+    // create the data array for the plot
+    var data1 = [trace1];
 
+    // define the plot layout
+    var layout = {
+      title: "Top 10 OTU",
+      font:{
+        family: "Arial"
+      }
+      xaxis:{ title: "Sample Count" },
+      yaxis:{ title: "OTU ID's" }
+      bargap: 0.1
     };
+      
+    // Plot the chart to a div tag with id "bar-plot"
+    Plotly.newPlot("bar", data1, layout);
 
 
+  // ***** Bubble Chart *****
+  // Use otu_ids for the x values.
+  // Use sample_values for the y values.
+  // Use sample_values for the marker size.
+  // Use otu_ids for the marker colors.
+  // Use otu_labels for the text values.
 
+  // trace2 for bubble chart
+  var trace2 = {
+    type: "bubble",
+    mode: "markers",
+    text: otu_labels,
+    x: otu_ids,
+    y: sample_values,
+    marker: {
+      size: sample_values,
+      colors: otu_ids,
+      opacity: 0.8
+    }
+  };
+    
+  var data2 = [trace2];
+
+  var layout = {
+    title: "OTU ID vs. Count",
+    showlegend: true,
+    height: 500,
+    width: 1000
+  };
+
+  Plotly.newPlot("bubble", data2, layout);
 
 
 
@@ -115,91 +123,11 @@ function buildPlots() {
       getPlot(data.names[0]);
       getInfo(data.names[0]);
   });
+
+
 }
 
 init();
-
-
-
-
-
-  })};
-
-
-  //  Create the Traces
-  // var trace1 = {
-  //   x: data.otu.id,
-  //   y: data.sample.value.map(),
-  //   type: "bar",
-  //   name: "Top 10 OTU's"
-   
-
-//*******************************************************/
-// const url = "http://localhost:52330/Homework/Plotly-Challenge/data/samples.json";
-
-
-// /**
-//  * Helper function to select stock data
-//  * Returns an array of values
-//  * @param {array} rows
-//  * @param {integer} index
-//  * index 0 - Date
-//  * index 1 - Open
-//  * index 2 - High
-//  * index 3 - Low
-//  * index 4 - Close
-//  * index 5 - Volume
-//  */
-// function unpack(rows, index) {
-//   return rows.map(function(row) {
-//     return row[index];
-//   });
-// }
-
-// function buildPlot() {
-//   d3.json(url).then(function(data) {
-
-//     // Grab values from the data json object to build the plots
-//     var name = data.dataset.name;
-//     var stock = data.dataset.dataset_code;
-//     var startDate = data.dataset.start_date;
-//     var endDate = data.dataset.end_date;
-//     var dates = unpack(data.dataset.data, 0);
-//     var closingPrices = unpack(data.dataset.data, 4);
-
-//     var trace1 = {
-//       type: "scatter",
-//       mode: "lines",
-//       name: name,
-//       x: dates,
-//       y: closingPrices,
-//       line: {
-//         color: "#17BECF"
-//       }
-//     };
-
-//     var data = [trace1];
-
-//     var layout = {
-//       title: `${stock} closing prices`,
-//       xaxis: {
-//         range: [startDate, endDate],
-//         type: "date"
-//       },
-//       yaxis: {
-//         autorange: true,
-//         type: "linear"
-//       }
-//     };
-
-//     Plotly.newPlot("plot", data, layout);
-
-//   });
-// }
-
-// buildPlot();
-
-
 
 //*******************************************************/
 // Dropdown Menu
@@ -225,19 +153,6 @@ init();
 // Use sample_values as the values for the bar chart.
 // Use otu_ids as the labels for the bar chart.
 // Use otu_labels as the hovertext for the chart.
-
-
-
-
-//*******************************************************/
-// Bubble Chart
-// Use otu_ids for the x values.
-// Use sample_values for the y values.
-// Use sample_values for the marker size.
-// Use otu_ids for the marker colors.
-// Use otu_labels for the text values.
-
-
 
 
 //*******************************************************/
