@@ -84,8 +84,8 @@ function buildPlots(id) {
       y: samples.sample_values,
       marker: {
         size: samples.sample_values,
-        colors: samples.otu_ids,
-        opacity: 0.8
+        color: samples.otu_ids,
+        colorscale: "Jet"
       }
     };
       
@@ -104,6 +104,10 @@ function buildPlots(id) {
     // Adapt the Gauge Chart from <https://plot.ly/javascript/gauge-charts/> to plot the weekly washing frequency of the individual.
     // You will need to modify the example gauge code to account for values ranging from 0 through 9.
     // Update the chart whenever a new sample is selected.
+
+    // get wash frequency
+    var washFrequency = data.samples.wfreq;
+    console.log(washFrequency);
 
     var trace3 = [
       {
@@ -133,7 +137,7 @@ function buildPlots(id) {
           threshold: {
             line: { color: "#850000", width: 4 },
             thickness: 0.75,
-            value: 490
+            value: 9
           }
         }
       }
@@ -146,8 +150,8 @@ function buildPlots(id) {
       width: 500,
       height: 400,
       margin: { t: 25, r: 25, l: 25, b: 25 },
-      paper_bgcolor: "lavender",
-      font: { color: "darkblue", family: "Arial" }
+      //paper_bgcolor: "#ffffff"",
+      //font: { color: "black", family: "Arial" }
     };
     
     Plotly.newPlot("gauge", data3, layout3);

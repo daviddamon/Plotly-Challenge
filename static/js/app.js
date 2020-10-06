@@ -56,7 +56,7 @@ function buildPlots(id) {
         title: "OTU ID's",
         tickmode: "linear"
       },
-      bargap: 0.1
+      bargap: 0.2
       // margin: {
       //   t:
       //   l:
@@ -84,8 +84,8 @@ function buildPlots(id) {
       y: samples.sample_values,
       marker: {
         size: samples.sample_values,
-        colors: samples.otu_ids,
-        opacity: 0.8
+        color: samples.otu_ids,
+        colorscale: "Jet"
       }
     };
       
@@ -99,9 +99,67 @@ function buildPlots(id) {
     };
 
     Plotly.newPlot("bubble", data2, layout2);
-      
+  
+
+    // ***** Gauge Chart *****
+    // Adapt the Gauge Chart from <https://plot.ly/javascript/gauge-charts/> to plot the weekly washing frequency of the individual.
+    // You will need to modify the example gauge code to account for values ranging from 0 through 9.
+    // Update the chart whenever a new sample is selected.
+
+    // // get wash frequency
+    // var washFrequency = data.metadata.wfreq;
+    // console.log(washFrequency);
+
+    // var trace3 = [
+    //   {
+    //     domain: {x:[0,1], y:[0,1]},
+    //     type: "indicator",
+    //     mode: "gauge",
+    //     value: washFrequency,
+    //     title: { text: "Belly Button Washes Per Week", color: "#444444", font: { size: 24 } },
+    //     gauge: {
+    //       shape: "angular",//pointer
+    //       axis: { range: [null, 9]},
+    //       bar: { color: "#850000" },//pointer color
+    //       bgcolor: "#ffffff",//gauge background color
+    //       //borderwidth: 2,
+    //       //bordercolor: "gray",
+    //       steps: [
+    //         { range: [0, 1], color: "#f8f3ec" },
+    //         { range: [1, 2], color: "#f4f1e4" },
+    //         { range: [2, 3], color: "#e9e6c9" },
+    //         { range: [3, 4], color: "#e5e8b0" },
+    //         { range: [4, 5], color: "#d5e599" },
+    //         { range: [5, 6], color: "#b7cd8f" },
+    //         { range: [6, 7], color: "#8ac086" },
+    //         { range: [7, 8], color: "#89bc8d" },
+    //         { range: [8, 9], color: "#84b589" }
+    //       ],
+    //       threshold: {
+    //         line: { color: "#850000", width: 4 },
+    //         thickness: 0.75,
+    //         value: 9
+    //       }
+    //     }
+    //   }
+    // ];
+    
+    // var data3 = [trace3];
+
+    // var layout3 = {
+    //   title: "Belly Button Washing Frequency",
+    //   width: 500,
+    //   height: 400,
+    //   margin: { t: 25, r: 25, l: 25, b: 25 },
+    //   //paper_bgcolor: "#ffffff"",
+    //   //font: { color: "black", family: "Arial" }
+    // };
+    
+    // Plotly.newPlot("gauge", data3, layout3);
+        
   });
 }
+
 
 // ***** Metadata Table *****
 // Display the sample metadata, i.e., an individual's demographic information.
